@@ -1,33 +1,22 @@
 import React from "react";
-import {render, waitForElement} from '@testing-library/react'
+import {render, wait} from '@testing-library/react'
 import ListBooksContainer from "./ListBooksContainer";
 import BookModel from "./BookModel";
-import BooksTable from "./BooksTable";
+import booksFactory from "./__test__/books-factory";
 
-jest.mock('./BooksTable', () => {
-    return jest.fn(() => null);
-});
+jest.mock('./BookModel')
 
 describe('ListBooks', () => {
     beforeEach(() => {
-        BookModel.fetchAll = jest.fn().mockResolvedValue(books());
+        BookModel.fetchAll = jest.fn().mockResolvedValue(booksFactory());
     });
 
-    it('should fetch the books', function () {
-        const { getByText, getByRole } = render(<ListBooksContainer/>);
+    it('should fetch the books', async function () {
+        const { getByText } = render(<ListBooksContainer/>);
 
-        expect(BookModel.fetchAll).toHaveBeenCalled();
-        waitForElement(() => {
-            expect(BooksTable).toHaveBeenCalledWith(books());
+        await wait(() => {
+            expect(BookModel.fetchAll).toHaveBeenCalled();
+            expect(getByText('Malcom Gladwell')).toBeInTheDocument();
         })
-        // waitForElement(() => {
-        //     expect(getByText('Malcom Gladwell')).toBeTruthy();
-        //     expect(getByText('J K Rowling')).toBeTruthy();
-        // })
     });
-
-    function books() {
-        return [{title: "Malcom Gladwell", author: "Outliers", price: 200},
-            {title: "J K Rowling", author: "Harry Potter", price: 500}];
-    }
 })
