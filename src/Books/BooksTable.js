@@ -13,7 +13,7 @@ export default function BooksTable(props) {
         <tbody>
         {
             books.map((book) => {
-                return <tr>
+                return <tr key={book.id}>
                     <td>{book.title}</td>
                     <td>{book.author}</td>
                     <td>{book.price}</td>

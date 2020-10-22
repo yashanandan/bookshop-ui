@@ -27,7 +27,7 @@ describe('BooksTable', () => {
     });
 
     function books() {
-        return [{title: "Malcom Gladwell", author: "Outliers", price: 200},
-            {title: "J K Rowling", author: "Harry Potter", price: 500}];
+        return [{id: 1, title: "Malcom Gladwell", author: "Outliers", price: 200},
+            {id: 2, title: "J K Rowling", author: "Harry Potter", price: 500}];
     }
 })
