@@ -2,7 +2,7 @@ import React from "react";
 import {render, waitFor} from '@testing-library/react'
 import ListBooksContainer from "./ListBooksContainer";
 import BookModel from "./BookModel";
-import booksFactory from "./__test__/books-factory";
+import booksFactory from "./__factory__/books-factory";
 
 jest.mock('./BookModel')
 

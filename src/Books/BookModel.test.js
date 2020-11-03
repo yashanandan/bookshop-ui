@@ -1,5 +1,5 @@
 import BookModel from "./BookModel";
-import booksFactory from "./__test__/books-factory";
+import booksFactory from "./__factory__/books-factory";
 import axios from 'axios';
 
 jest.mock('axios');
