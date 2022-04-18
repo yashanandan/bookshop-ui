@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function BooksTable(props) {
     const books = props.books;
@@ -14,7 +15,9 @@ export default function BooksTable(props) {
         {
             books.map((book) => {
                 return <tr key={book.id}>
-                    <td>{book.title}</td>
+                    <td>
+                        <Link to={`/books/${book.id}`}>{book.title}</Link>
+                    </td>
                     <td>{book.authorName}</td>
                     <td>{book.price}</td>
                 </tr>
