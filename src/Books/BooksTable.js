@@ -15,7 +15,7 @@ export default function BooksTable(props) {
             books.map((book) => {
                 return <tr key={book.id}>
                     <td>{book.title}</td>
-                    <td>{book.author}</td>
+                    <td>{book.authorName}</td>
                     <td>{book.price}</td>
                 </tr>
             })

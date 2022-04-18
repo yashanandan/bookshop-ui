@@ -1,10 +1,8 @@
 import React from "react";
-import {render, waitFor} from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import ListBooksContainer from "./ListBooksContainer";
 import BookModel from "./BookModel";
 import booksFactory from "./__factory__/books-factory";
-
-jest.mock('./BookModel')
 
 describe('ListBooks', () => {
     beforeEach(() => {
@@ -15,7 +13,7 @@ describe('ListBooks', () => {
         const { getByText } = render(<ListBooksContainer/>);
 
         await waitFor(() => {
-            // expect(BookModel.fetchAll).toHaveBeenCalled();
+            expect(BookModel.fetchAll).toHaveBeenCalled();
             expect(getByText('Malcom Gladwell')).toBeInTheDocument();
         })
     });
