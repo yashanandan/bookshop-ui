@@ -5,7 +5,10 @@ import ListBooksContainer from "./Books/ListBooksContainer";
 function App() {
   return (
     <div className="App">
-      <ListBooksContainer/>
+        <h1>Book Store</h1>
+        <div className="App-layout">
+            <ListBooksContainer/>
+        </div>
     </div>
   );
 }
