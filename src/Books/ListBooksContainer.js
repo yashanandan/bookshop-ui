@@ -11,6 +11,7 @@ export default class ListBooksContainer extends React.Component {
     }
     componentDidMount() {
         BookModel.fetchAll().then((books) => {
+            console.log('books ', books)
             this.setState({books: books});
         })
     }

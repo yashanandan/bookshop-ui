@@ -1,0 +1,8 @@
+.MuiFormControl-root {
+  width: 30% !important;
+}
+
+.MuiAutocomplete-root {
+  display: flex !important;
+  margin: 20px 0;
+}
