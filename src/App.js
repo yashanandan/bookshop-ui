@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import ListBooksContainer from "./Books/ListBooksContainer";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import BookDetail from "./Books/BookDetail";
 
 function App() {
@@ -11,7 +11,8 @@ function App() {
             <div className="App-layout">
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/" element={<ListBooksContainer />}></Route>
+                        <Route path='' element={<Navigate to="/books" replace />}  />
+                        <Route path="/books" element={<ListBooksContainer />}></Route>
                         <Route path="/books/:id" element={<BookDetail />}></Route>
                     </Routes>
                 </BrowserRouter>
