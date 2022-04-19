@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -14,7 +14,7 @@ import { visuallyHidden } from "@mui/utils";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import "./BookTable.css";
-import { debounce } from 'lodash';
+import { debounce } from "lodash";
 
 function createData(id, name, calories, fat, carbs, protein) {
   return {
@@ -152,27 +152,27 @@ EnhancedTableHead.propTypes = {
 };
 
 export default function BooksTable(props) {
+
   const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
-  const [selected, setSelected] = React.useState([]);
+  const [orderBy, setOrderBy] = React.useState("amount");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const [searchInputOrAuthorName, setSearchInputOrAuthorName] = useState("");
+
+  const searchInputRef = useRef();
+
+  useEffect(() => {
+    // initialize debounce function to search once user has stopped typing every half second
+    searchInputRef.current = debounce(searchFromDB, 500);
+  }, []);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
-    console.log("property ", property);
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -184,15 +184,14 @@ export default function BooksTable(props) {
   };
 
   function handleChange(event) {
-    console.log('IN handle', event.target.value);
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const debouncedSave = debounce(() => searchFromDB(event.target.value), 1000);
-	debouncedSave();
+    console.log("IN handle", event.target.value);
+    setSearchInputOrAuthorName(event.target.value);
+    searchInputRef.current(event.target.value);
   }
 
   const searchFromDB = (searchText) => {
-      console.log('Search Text ', searchText)
-  }
+    console.log("Search Text ", searchText);
+  };
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -222,10 +221,8 @@ export default function BooksTable(props) {
               size={"medium"}
             >
               <EnhancedTableHead
-                numSelected={selected.length}
                 order={order}
                 orderBy={orderBy}
-                onSelectAllClick={handleSelectAllClick}
                 onRequestSort={handleRequestSort}
                 rowCount={rows.length}
               />
