@@ -11,7 +11,7 @@ export default class BookModel {
 
     static fetchAll = async (bookOrAuthorName = '') => {
         const env = runtimeEnv();
-        console.log('env ', env)
+        console.log('env ', env.REACT_BOOK_SHOP)
         const baseUrl = env.REACT_BOOK_SHOP || 'http://localhost:8080';
         console.log('baseUrl ', baseUrl);
         const url = `${baseUrl}/api/books?bookOrAuthorName=${bookOrAuthorName}`;
