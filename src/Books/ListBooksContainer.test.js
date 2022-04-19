@@ -3,6 +3,7 @@ import { render, waitFor } from '@testing-library/react'
 import ListBooksContainer from "./ListBooksContainer";
 import BookModel from "./BookModel";
 import booksFactory from "./__factory__/books-factory";
+import { MemoryRouter } from "react-router-dom";
 
 describe('ListBooks', () => {
     beforeEach(() => {
@@ -10,7 +11,7 @@ describe('ListBooks', () => {
     });
 
     it('should fetch the books', async function () {
-        const { getByText } = render(<ListBooksContainer/>);
+        const { getByText } = render(<MemoryRouter><ListBooksContainer/></MemoryRouter>);
 
         await waitFor(() => {
             expect(BookModel.fetchAll).toHaveBeenCalled();
