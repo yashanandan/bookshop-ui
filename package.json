@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
+    "@mars/heroku-js-runtime-env": "^3.0.2",
     "@mui/material": "^5.6.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^10.4.9",
