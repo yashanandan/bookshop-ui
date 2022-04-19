@@ -6,7 +6,6 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import Paper from "@mui/material/Paper";
@@ -15,30 +14,7 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import "./BookTable.css";
 import { debounce } from "lodash";
-
-function createData(id, name, calories, fat, carbs, protein) {
-  return {
-    id,
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-  };
-}
-
-const rows = [
-  createData(1, "Harry Potter", "Harry Potter", 100),
-  createData(
-    2,
-    " Don Quixote by Miguel de Cervantes.",
-    "Miguel de Cervantes.",
-    300
-  ),
-  createData(3, "Harry Potter1", "Harry Potter", 200),
-  createData(4, " The Great Gatsby2", "Harry Potter", 50),
-  createData(5, "Harry Potter3", "Harry Potter", 900),
-];
+import BookModel from "./BookModel";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -72,7 +48,7 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: "name",
+    id: "bookName",
     numeric: false,
     disablePadding: true,
     label: "Book Name",
@@ -151,21 +127,34 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
+const createBookList = (books) => {
+  return books.map((book) => {
+    return {
+      id: book.id,
+      bookName: book.name,
+      authorName: book.authorName,
+      amount: book.price.amount,
+      currency: book.price.currency,
+    };
+  });
+}
+
 export default function BooksTable(props) {
 
   const [order, setOrder] = React.useState("asc");
+  const [isErrorOccured, setIsErrorOccured] = React.useState(false);
   const [orderBy, setOrderBy] = React.useState("amount");
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-  const [searchInputOrAuthorName, setSearchInputOrAuthorName] = useState("");
+  const [emptyRows, setEmptyRows] = React.useState(0);
+  const [, setSearchBookOrAuthorName] = useState("");
+  const [tableRows, setTableRows] = useState(createBookList(props.books));
 
   const searchInputRef = useRef();
 
   useEffect(() => {
     // initialize debounce function to search once user has stopped typing every half second
     searchInputRef.current = debounce(searchFromDB, 500);
-  }, []);
+    setTableRows(createBookList(props.books))
+  }, [props]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -174,28 +163,27 @@ export default function BooksTable(props) {
   };
 
 
-  // const handleChangePage = (event, newPage) => {
-  //   setPage(newPage);
-  // };
-
-  // const handleChangeRowsPerPage = (event) => {
-  //   setRowsPerPage(parseInt(event.target.value, 10));
-  //   setPage(0);
-  // };
-
   function handleChange(event) {
-    console.log("IN handle", event.target.value);
-    setSearchInputOrAuthorName(event.target.value);
+    setSearchBookOrAuthorName(event.target.value);
     searchInputRef.current(event.target.value);
   }
 
-  const searchFromDB = (searchText) => {
-    console.log("Search Text ", searchText);
+  const searchFromDB = async (searchText) => {
+    try {
+      const response = await BookModel.fetchAll(searchText);
+      setIsErrorOccured(false);
+      if (!response?.length) {
+        setEmptyRows(1);
+        return;
+      }
+      setTableRows(createBookList(response));
+      setEmptyRows(0);
+    } catch (error) {
+      setIsErrorOccured(true);
+      setEmptyRows(1);
+    }
   };
 
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
     <div>
@@ -203,6 +191,7 @@ export default function BooksTable(props) {
         id="free-solo-demo"
         freeSolo
         options={[]}
+        onInputChange={handleChange}
         renderInput={(params) => (
           <TextField
             onChange={handleChange}
@@ -224,13 +213,13 @@ export default function BooksTable(props) {
                 order={order}
                 orderBy={orderBy}
                 onRequestSort={handleRequestSort}
-                rowCount={rows.length}
+                rowCount={tableRows.length}
               />
               <TableBody>
                 {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-                {stableSort(rows, getComparator(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                {emptyRows === 0 && (stableSort(tableRows, getComparator(order, orderBy))
+                  // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
                     return (
                       <TableRow hover tabIndex={-1} key={row.id}>
@@ -241,22 +230,25 @@ export default function BooksTable(props) {
                           align="center"
                           padding="none"
                         >
-                          {row.name}
+                          {row.bookName}
                         </TableCell>
-                        <TableCell align="center">{row.calories}</TableCell>
-                        <TableCell align="center">{row.fat}</TableCell>
-                        <TableCell align="center">{row.carbs}</TableCell>
-                        <TableCell align="center">{row.protein}</TableCell>
+                        <TableCell align="center">{row.authorName}</TableCell>
+                        <TableCell align="center">
+                          {" "}
+                          {row.currency} {row.amount}
+                        </TableCell>
                       </TableRow>
                     );
-                  })}
+                  }))}
                 {emptyRows > 0 && (
                   <TableRow
                     style={{
                       height: 53 * emptyRows,
                     }}
                   >
-                    <TableCell colSpan={6} />
+                    <TableCell colSpan={headCells.length} align="center">
+                       { isErrorOccured ? 'Error Occurred! Please try again later'  : 'No Record Found'}
+                    </TableCell>
                   </TableRow>
                 )}
               </TableBody>

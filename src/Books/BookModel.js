@@ -1,8 +1,9 @@
 import axios from 'axios';
 
 export default class BookModel {
-    static fetchAll = async () => {
-        const response = await axios.get('http://localhost:8080/books', this.authHeaders());
+    static fetchAll = async (bookOrAuthorName = '') => {
+        const url = `http://localhost:8080/books?bookOrAuthorName=${bookOrAuthorName}`;
+        const response = await axios.get(url, this.authHeaders());
         return response.data;
     }
 
