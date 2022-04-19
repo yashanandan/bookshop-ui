@@ -11,7 +11,9 @@ export default class BookModel {
 
     static fetchAll = async (bookOrAuthorName = '') => {
         const env = runtimeEnv();
-        const baseUrl = env.REACT_BOOK_SHOP || `http://localhost:8080`;
+        console.log('env ', env)
+        const baseUrl = env.REACT_BOOK_SHOP;
+        console.log('baseUrl ', baseUrl);
         const url = `${baseUrl}/api/books?bookOrAuthorName=${bookOrAuthorName}`;
         const response = await axios.get(url, this.authHeaders());
         return response.data.map((book) => new BookModel(book));
