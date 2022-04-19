@@ -234,7 +234,7 @@ export default function BooksTable(props) {
                     }}
                   >
                     <TableCell colSpan={headCells.length} align="center">
-                       { isErrorOccured ? 'Error Occurred! Please try again later'  : 'No Record Found'}
+                       { isErrorOccured ? 'Error Occurred! Please try again later'  : 'No match found'}
                     </TableCell>
                   </TableRow>
                 )}
