@@ -1,0 +1,27 @@
+.purchase-book-container {
+    margin: 20px 0;
+}
+
+.purchase-address-container {
+    box-shadow: 0 0px 7px rgb(0 0 0 / 10%);
+    max-width: 40vw;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.error-occurred {
+    margin: 10px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: red;
+}
+
+.order-confirmed {
+    box-shadow: 0 0px 7px rgb(0 0 0 / 10%);
+    max-width: 30vw;
+    padding: 20px;
+    margin: auto;
+    line-height: 2;
+    font-size: 1.1rem;
+}

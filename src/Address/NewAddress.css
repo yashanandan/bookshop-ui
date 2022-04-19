@@ -1,0 +1,27 @@
+.form-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 80%;
+    margin: auto;
+}
+
+.form-item label {
+    font-weight: 600;
+    margin: 10px 0;
+}
+
+.form-item input {
+    height: 40px;
+    width: 35em;
+}
+
+.form-item span {
+    color: red;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+form .MuiButton-contained {
+    margin: 20px 0;
+}

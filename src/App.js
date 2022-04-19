@@ -8,7 +8,7 @@ import Purchase from './Books/Purchase/Purchase'
 function App() {
     return (
         <div className="App">
-            <h1>Book Store</h1>
+            <h1>Saraswati Book Store</h1>
             <div className="App-layout">
                 <BrowserRouter>
                     <Routes>

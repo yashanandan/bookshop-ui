@@ -176,6 +176,10 @@ export default function BooksTable(props) {
 
   const navigate = useNavigate();
 
+  const purchaseBook = (book) => {
+    sessionStorage.setItem('bookName', book.title);
+    navigate(`/purchase/${book.id}`)
+  }
 
 
   return (
@@ -230,7 +234,7 @@ export default function BooksTable(props) {
                           {row.price}
                         </TableCell>
                         <TableCell align="center">
-                          <Button variant="contained" onClick={() => navigate(`/purchase/${row.id}`)}>Purchase</Button>
+                          <Button variant="contained" onClick={() => purchaseBook(row)}>Purchase</Button>
                         </TableCell>
                       </TableRow>
                     );
