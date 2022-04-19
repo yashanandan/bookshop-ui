@@ -17,8 +17,8 @@ export default class BookModel {
     static authHeaders() {
         return {
             auth: {
-                username: 'prem@tw.com',
-                password: '1234',
+                username: 'test2@book.com',
+                password: 'test',
             },
         }
     }
