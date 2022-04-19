@@ -10,8 +10,8 @@ describe('BooksTable', () => {
             <BooksTable books={[{}]}/>
         </MemoryRouter>);
 
-        expect(getByText('Title')).toBeTruthy();
-        expect(getByText('Author')).toBeTruthy();
+        expect(getByText('Book Name')).toBeTruthy();
+        expect(getByText('Author Name')).toBeTruthy();
         expect(getByText('Price')).toBeTruthy();
     });
 
