@@ -15,6 +15,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import "./BookTable.css";
 import { debounce } from "lodash";
 import BookModel from "./BookModel";
+import Button from '@mui/material/Button';
+import { useNavigate } from "react-router-dom";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -172,6 +174,9 @@ export default function BooksTable(props) {
     }
   };
 
+  const navigate = useNavigate();
+
+
 
   return (
     <div>
@@ -223,6 +228,9 @@ export default function BooksTable(props) {
                         <TableCell align="center">{row.authorName}</TableCell>
                         <TableCell align="center">
                           {row.price}
+                        </TableCell>
+                        <TableCell align="center">
+                          <Button variant="contained" onClick={() => navigate(`/purchase/${row.id}`)}>Purchase</Button>
                         </TableCell>
                       </TableRow>
                     );
