@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default class PurchaseService {
     static orderBook = async (orderDetails) => {
-        const baseUrl = process.env.BASE_API_URL || `http://localhost:8080/api`;
+        const baseUrl = process.env.REACT_APP_BOOK_SERVICE_URL;
         const url = `${baseUrl}/orders`;
         const result = await axios.post(url, orderDetails, this.authHeaders());
         return result.data;

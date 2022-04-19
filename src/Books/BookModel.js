@@ -1,4 +1,5 @@
 import axios from 'axios';
+import runtimeEnv from '@mars/heroku-js-runtime-env';
 
 export default class BookModel {
     constructor(args) {
@@ -9,8 +10,9 @@ export default class BookModel {
     }
 
     static fetchAll = async (bookOrAuthorName = '') => {
-        const baseUrl = process.env.BASE_API_URL || `http://localhost:8080/api`;
-        const url = `${baseUrl}/books?bookOrAuthorName=${bookOrAuthorName}`;
+        const env = runtimeEnv();
+        const baseUrl = env.REACT_APP_BOOK_SERVICE_URL;
+        const url = `${baseUrl}/api/books?bookOrAuthorName=${bookOrAuthorName}`;
         const response = await axios.get(url, this.authHeaders());
         return response.data.map((book) => new BookModel(book));
     }
