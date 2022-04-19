@@ -48,7 +48,7 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: "bookName",
+    id: "title",
     numeric: false,
     disablePadding: true,
     label: "Book Name",
@@ -62,7 +62,7 @@ const headCells = [
     disableSorting: true,
   },
   {
-    id: "amount",
+    id: "price",
     numeric: false,
     disablePadding: false,
     label: "Price",
@@ -127,33 +127,21 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-const createBookList = (books) => {
-  return books.map((book) => {
-    return {
-      id: book.id,
-      bookName: book.name,
-      authorName: book.authorName,
-      amount: book.price.amount,
-      currency: book.price.currency,
-    };
-  });
-}
 
 export default function BooksTable(props) {
-
   const [order, setOrder] = React.useState("asc");
   const [isErrorOccured, setIsErrorOccured] = React.useState(false);
   const [orderBy, setOrderBy] = React.useState("amount");
   const [emptyRows, setEmptyRows] = React.useState(0);
   const [, setSearchBookOrAuthorName] = useState("");
-  const [tableRows, setTableRows] = useState(createBookList(props.books));
+  const [tableRows, setTableRows] = useState(props.books);
 
   const searchInputRef = useRef();
 
   useEffect(() => {
     // initialize debounce function to search once user has stopped typing every half second
     searchInputRef.current = debounce(searchFromDB, 500);
-    setTableRows(createBookList(props.books))
+    setTableRows(props.books)
   }, [props]);
 
   const handleRequestSort = (event, property) => {
@@ -176,7 +164,7 @@ export default function BooksTable(props) {
         setEmptyRows(1);
         return;
       }
-      setTableRows(createBookList(response));
+      setTableRows(response);
       setEmptyRows(0);
     } catch (error) {
       setIsErrorOccured(true);
@@ -230,12 +218,11 @@ export default function BooksTable(props) {
                           align="center"
                           padding="none"
                         >
-                          {row.bookName}
+                          {row.title}
                         </TableCell>
                         <TableCell align="center">{row.authorName}</TableCell>
                         <TableCell align="center">
-                          {" "}
-                          {row.currency} {row.amount}
+                          {row.price}
                         </TableCell>
                       </TableRow>
                     );
