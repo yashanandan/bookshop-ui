@@ -1,13 +1,12 @@
 import React from "react";
 import {screen, render} from '@testing-library/react';
-import NewAddress from "./NewAddress";
-import { MemoryRouter } from "react-router-dom";
+import PurchaseAddress from "./PurchaseAddress";
 
 jest.mock('axios');
 
 describe('New Address', () => {
     it('should show items on screen',  function () {
-        render(<NewAddress  bookId={1}/>);
+        render(<PurchaseAddress  bookId={1}/>);
 
         expect(screen.queryAllByPlaceholderText('Recipient Name')).toBeTruthy();
         expect(screen.queryAllByPlaceholderText('Address Line 1')).toBeTruthy();

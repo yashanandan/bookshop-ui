@@ -1,9 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import Button from '@mui/material/Button';
-import "./NewAddress.css";
+import Button from "@mui/material/Button";
+import "./PurchaseAddress.css";
 
-function NewAddress(props) {
+function PurchaseAddress(props) {
   const {
     register: address,
     formState: { errors },
@@ -27,32 +27,47 @@ function NewAddress(props) {
     props.address(orderDetails);
   };
 
-
   //api call using the id to load book data
   return (
     <div>
       <form onSubmit={handleSubmit(orderBook)} className="my-form">
         <div className="form-item">
           <label htmlFor="recipientName">Recipent name:*</label>
-          <input {...address("recipientName", { required: true })} placeholder="Recipient Name" />
+          <input
+            {...address("recipientName", { required: true })}
+            placeholder="Recipient Name"
+            type="text"
+          />
           {errors.recipientName && errors.recipientName.type === "required" && (
             <span>This is required</span>
           )}
         </div>
         <div className="form-item">
           <label htmlFor="lineNoOne">Address Line 1:*</label>
-          <input {...address("lineNoOne", { required: true })}   placeholder="Address Line 1" />
+          <input
+            {...address("lineNoOne", { required: true })}
+            placeholder="Address Line 1"
+            type="text"
+          />
           {errors.lineNoOne && errors.lineNoOne.type === "required" && (
             <span>This is required</span>
           )}
         </div>
         <div className="form-item">
           <label htmlFor="lineNoTwo">Address Line 2:</label>
-          <input {...address("lineNoTwo", { required: true })} placeholder="Address Line 2" />
+          <input
+            {...address("lineNoTwo", { required: true })}
+            placeholder="Address Line 2"
+            type="text"
+          />
         </div>
         <div className="form-item">
           <label htmlFor="city">City:*</label>
-          <input {...address("city", { required: true })} placeholder="City" />
+          <input
+            {...address("city", { required: true })}
+            placeholder="City"
+            type="text"
+          />
           {errors.city && errors.city.type === "required" && (
             <span>This is required</span>
           )}
@@ -60,7 +75,11 @@ function NewAddress(props) {
 
         <div className="form-item">
           <label htmlFor="city">State:*</label>
-          <input {...address("state", { required: true })} placeholder="State" />
+          <input
+            {...address("state", { required: true })}
+            placeholder="State"
+            type="text"
+          />
           {errors.state && errors.state.type === "required" && (
             <span>This is required</span>
           )}
@@ -68,7 +87,11 @@ function NewAddress(props) {
 
         <div className="form-item">
           <label htmlFor="city">Pincode:*</label>
-          <input {...address("pincode", { required: true })} placeholder="Pincode" />
+          <input
+            {...address("pincode", { required: true })}
+            placeholder="Pincode"
+            type="text"
+          />
           {errors.pincode && errors.pincode.type === "required" && (
             <span>This is required</span>
           )}
@@ -76,7 +99,11 @@ function NewAddress(props) {
 
         <div className="form-item">
           <label htmlFor="city">Country:*</label>
-          <input {...address("country", { required: true })} placeholder="Country" />
+          <input
+            {...address("country", { required: true })}
+            placeholder="Country"
+            type="text"
+          />
           {errors.country && errors.country.type === "required" && (
             <span>This is required</span>
           )}
@@ -84,16 +111,33 @@ function NewAddress(props) {
 
         <div className="form-item">
           <label htmlFor="city">Quatity:*</label>
-          <input {...address("quantity", { required: true })} type="number" placeholder="Quantity" />
+          <input
+            {...address("quantity", { required: true, min: 1 })}
+            type="number"
+            placeholder="Quantity"
+            min={1}
+          />
           {errors.quantity && errors.quantity.type === "required" && (
             <span>This is required</span>
           )}
+          {errors.quantity && errors.quantity.min && (
+            <span>Minimum quantity should be 1</span>
+          )}
+        </div>
+        <div className="form-item">
+          <label htmlFor="city">Payment Type:*</label>
+          <div>
+            <input type="radio" value="COD" name="paymentType"  {...address("payment_type", { required: true })} /> COD
+            <input type="radio" value="Card" name="paymentType" {...address("payment_type", { required: true })} /> Card
+          </div>
         </div>
 
-        <Button variant="contained" type="submit">Submit</Button>
+        <Button variant="contained" type="submit">
+          Submit
+        </Button>
       </form>
     </div>
   );
 }
 
-export default NewAddress;
+export default PurchaseAddress;

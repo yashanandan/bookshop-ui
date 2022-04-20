@@ -11,7 +11,8 @@
     margin: 10px 0;
 }
 
-.form-item input {
+.form-item input[type='text'],
+.form-item input[type='number'] {
     height: 40px;
     width: 35em;
 }

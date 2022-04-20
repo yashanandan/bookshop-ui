@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import NewAddress from "./../../Address/NewAddress";
+import PurchaseAddress from "./PurchaseAddress/PurchaseAddress";
 import PurchaseService from "./Purchase.service";
 import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
@@ -66,7 +66,7 @@ function Purchase() {
 
       {!showOrderDetails && (
         <div className="purchase-address-container">
-          <NewAddress bookId={id} address={orderBook} />
+          <PurchaseAddress bookId={id} address={orderBook} />
         </div>
       )}
     </div>
