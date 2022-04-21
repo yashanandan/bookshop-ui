@@ -1,0 +1,7 @@
+.purchase-card-container {
+    box-shadow: 0 0px 7px rgb(0 0 0 / 10%);
+    max-width: 40vw;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+}
