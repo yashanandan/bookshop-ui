@@ -53,7 +53,7 @@ function PayByCard(props) {
         setShowOrderDetails(true);
         setShowOrderMessage(
           responseData.message ||
-            `Your order placed successfully with ID - ${orderDetails.id}.`
+            `Your order placed successfully. Order Reference Number - ${orderDetails.id}.`
         );
       }
       setShowLoader(false);

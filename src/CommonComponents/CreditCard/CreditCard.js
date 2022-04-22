@@ -46,7 +46,7 @@ function CreditCard(props) {
         return (
           <form onSubmit={handleSubmit}>
             <div className="form-input">
-              <label htmlFor="email-text">Card Number</label>
+              <label htmlFor="email-text">Card Number*</label>
               <Field
                 name="number"
                 component="input"
@@ -60,7 +60,7 @@ function CreditCard(props) {
               )}
             </div>
             <div className="form-input">
-              <label htmlFor="email-text">Card Holder Name</label>
+              <label htmlFor="email-text">Card Holder Name*</label>
               <Field
                 name="name"
                 component="input"
@@ -73,7 +73,7 @@ function CreditCard(props) {
             </div>
             <div className="card-exp-cvv">
               <div className="form-input">
-                <label htmlFor="email-text">Valid Thru</label>
+                <label htmlFor="email-text">Valid Thru*</label>
                 <Field
                   name="expiry"
                   component="input"
@@ -87,12 +87,12 @@ function CreditCard(props) {
                 )}
               </div>
               <div className="form-input">
-                <label htmlFor="email-text">CVV</label>
+                <label htmlFor="email-text">CVV*</label>
                 <Field
                   name="cvv"
                   component="input"
                   type="text"
-                  pattern="\d{3,4}"
+                  pattern="\d{3}"
                   placeholder="CVV"
                   format={formatCVV}
                 />

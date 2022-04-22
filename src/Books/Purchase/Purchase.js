@@ -88,7 +88,7 @@ function Purchase() {
 
       {showOrderDetails && (
         <div className="order-confirmed">
-          <div>Your order placed successfully with ID - {orderDetails.id}</div>
+          <div>Your order placed successfully. Order Reference Number - {orderDetails.id}</div>
           <div>Please pay <strong> {orderDetails.currency} {orderDetails.amount} </strong> amount on delivery</div>
           <div>
             <Button variant="contained" onClick={() => navigate(`/`)}>Go To Home Page</Button>

@@ -18,6 +18,10 @@
     margin: 10px 0;
 }
 
+.form-input label {
+    font-weight: 600;
+}
+
 .card-exp-cvv .form-input input[type='text'],
 .card-exp-cvv  .form-input input[type='number'] {
     width: 20em;

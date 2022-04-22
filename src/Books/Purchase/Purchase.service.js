@@ -29,7 +29,7 @@ export default class PurchaseService {
       const statusCode = error?.response?.status || 500;
       let message = "";
       if (statusCode === 400) {
-        message = "Please verify card details!";
+        message = error?.response?.data || "Please verify card details!";
       } else if (statusCode === 500) {
         message = `Payment failed. If the amount is deducted it will refund `;
       }
