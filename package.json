@@ -11,6 +11,7 @@
     "@testing-library/react": "^10.4.9",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.20.0",
+    "final-form": "^4.20.6",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.8",
     "lodash": "^4.17.21",
