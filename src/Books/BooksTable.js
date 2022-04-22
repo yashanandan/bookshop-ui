@@ -15,7 +15,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import "./BookTable.css";
 import { debounce } from "lodash";
 import BookModel from "./BookModel";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 
 function descendingComparator(a, b, orderBy) {
@@ -129,8 +129,8 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-
 export default function BooksTable(props) {
+  console.log('props ', props);
   const [order, setOrder] = React.useState("asc");
   const [isErrorOccured, setIsErrorOccured] = React.useState(false);
   const [orderBy, setOrderBy] = React.useState("amount");
@@ -143,7 +143,7 @@ export default function BooksTable(props) {
   useEffect(() => {
     // initialize debounce function to search once user has stopped typing every half second
     searchInputRef.current = debounce(searchFromDB, 500);
-    setTableRows(props.books)
+    setTableRows(props.books);
   }, [props]);
 
   const handleRequestSort = (event, property) => {
@@ -151,7 +151,6 @@ export default function BooksTable(props) {
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
-
 
   function handleChange(event) {
     setSearchBookOrAuthorName(event.target.value);
@@ -177,10 +176,10 @@ export default function BooksTable(props) {
   const navigate = useNavigate();
 
   const purchaseBook = (book) => {
-    sessionStorage.setItem('bookName', book.title);
-    navigate(`/purchase/${book.id}`)
-  }
-
+    sessionStorage.setItem("bookName", book.title);
+    sessionStorage.setItem("bookCount", book.countAvailable);
+    navigate(`/purchase/${book.id}`);
+  };
 
   return (
     <div>
@@ -215,30 +214,41 @@ export default function BooksTable(props) {
               <TableBody>
                 {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-                {emptyRows === 0 && (stableSort(tableRows, getComparator(order, orderBy))
-                  // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    return (
-                      <TableRow hover tabIndex={-1} key={row.id}>
-                        <TableCell
-                          component="th"
-                          id={index}
-                          scope="row"
-                          align="center"
-                          padding="none"
-                        >
-                          {row.title}
-                        </TableCell>
-                        <TableCell align="center">{row.authorName}</TableCell>
-                        <TableCell align="center">
-                          {row.price}
-                        </TableCell>
-                        <TableCell align="center">
-                          <Button variant="contained" onClick={() => purchaseBook(row)}>Purchase</Button>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }))}
+                {emptyRows === 0 &&
+                  stableSort(tableRows, getComparator(order, orderBy))
+                    // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => {
+                      return (
+                        <TableRow hover tabIndex={-1} key={row.id}>
+                          <TableCell
+                            component="th"
+                            id={index}
+                            scope="row"
+                            align="center"
+                            padding="none"
+                          >
+                            {row.title}
+                          </TableCell>
+                          <TableCell align="center">{row.authorName}</TableCell>
+                          <TableCell align="center">{row.price}</TableCell>
+                          <TableCell align="center">
+                            {row.countAvailable > 0 && (
+                              <Button
+                                variant="contained"
+                                onClick={() => purchaseBook(row)}
+                              >
+                                Purchase
+                              </Button>
+                            )}
+                            {!row.countAvailable && (
+                              <Button variant="outlined" disabled>
+                                Out Of Stock
+                              </Button>
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
                 {emptyRows > 0 && (
                   <TableRow
                     style={{
@@ -246,7 +256,9 @@ export default function BooksTable(props) {
                     }}
                   >
                     <TableCell colSpan={headCells.length} align="center">
-                       { isErrorOccured ? 'Error Occurred! Please try again later'  : 'No match found'}
+                      {isErrorOccured
+                        ? "Error Occurred! Please try again later"
+                        : "No match found"}
                     </TableCell>
                   </TableRow>
                 )}

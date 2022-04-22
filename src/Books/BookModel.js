@@ -7,6 +7,7 @@ export default class BookModel {
         this._title = args.name;
         this._author = {name: args.authorName};
         this._price = args.price;
+        this._countAvailable = args.countAvailable;
     }
 
     static fetchAll = async (bookOrAuthorName = '') => {
@@ -40,6 +41,10 @@ export default class BookModel {
 
     get price() {
         return this._price.currency + " " + this._price.amount
+    }
+
+    get countAvailable() {
+        return this._countAvailable;
     }
 
 }
