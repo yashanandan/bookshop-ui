@@ -5,12 +5,15 @@ import PurchaseService from "./Purchase.service";
 import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
 import "./Purchase.css";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function Purchase() {
   let { id } = useParams();
   const navigate = useNavigate();
   const [bookName, setBookName] = React.useState("");
   const [isErrorOccured, setIsErrorOccured] = React.useState(false);
+  const [showLoader, setShowLoader] = React.useState(false);
   const [orderDetails, setOrderDetails] = React.useState({
     id: 0,
     amount: 0,
@@ -27,6 +30,7 @@ function Purchase() {
 
   const orderBook = async (orderDetails) => {
     try {
+      setShowLoader(true);
       setIsErrorOccured(false);
       const orderedData = await PurchaseService.orderBook(orderDetails);
       setOrderDetails({
@@ -52,12 +56,22 @@ function Purchase() {
       setShowOrderDetails(true);
     } catch (error) {
       setIsErrorOccured(true);
+    } finally {
+      setShowLoader(false);
     }
   };
 
   //api call using the id to load book data
   return (
     <div className="purchase-book-container">
+       {showLoader && (
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={showLoader}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
       {!showOrderDetails && (
         <div>
           Purchase the book <strong>{bookName}</strong>
