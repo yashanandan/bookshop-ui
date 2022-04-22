@@ -23,6 +23,7 @@ function PurchaseAddress(props) {
       },
       bookId: props.bookId,
       quantity: data.quantity,
+      paymentMode: data.paymentMode
     };
     props.address(orderDetails);
   };
@@ -127,8 +128,8 @@ function PurchaseAddress(props) {
         <div className="form-item">
           <label htmlFor="city">Payment Type:*</label>
           <div>
-            <input type="radio" value="COD" name="paymentType"  {...address("payment_type", { required: true })} /> COD
-            <input type="radio" value="Card" name="paymentType" {...address("payment_type", { required: true })} /> Card
+            <input type="radio" value="COD" name="paymentMode"  {...address("paymentMode", { required: true })} /> COD
+            <input type="radio" value="CARD" name="paymentMode" {...address("paymentMode", { required: true })} /> Card
           </div>
         </div>
 

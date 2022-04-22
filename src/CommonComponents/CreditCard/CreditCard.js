@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Field } from "react-final-form";
 import "./CreditCard.css";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 
 import {
   formatCreditCardNumber,
@@ -9,21 +9,39 @@ import {
   formatCVV,
 } from "./CreditCardUtils";
 
-const onSubmit = (data) => {
-  console.log("Data ", data);
-};
+function CreditCard(props) {
 
-function CreditCard() {
+  const [errors, setErrors] = useState({});
+
+  const onSubmit = (data) => {
+    let errors = {};
+    if (!data.number) {
+      errors = {...errors, ...{ number: { type: 'required'}}};
+    }
+    if (!data.expiry) {
+      errors = {...errors, ...{ expiry: { type: 'required'}}};
+    }
+    if (!data.cvv) {
+      errors = {...errors, ...{ cvv: { type: 'required'}}};
+    }
+    if (!data.name) {
+      errors = {...errors, ...{ name: { type: 'required'}}};
+    }
+
+    setErrors(errors);
+
+    if (!Object.keys(errors).length)  {
+      props.makePayment(data);
+    }
+  };
+
+
   return (
     <Form
       onSubmit={onSubmit}
       render={({
         handleSubmit,
-        form,
-        submitting,
-        pristine,
-        values,
-        active,
+        form
       }) => {
         return (
           <form onSubmit={handleSubmit}>
@@ -37,6 +55,9 @@ function CreditCard() {
                 placeholder="Card Number"
                 format={formatCreditCardNumber}
               />
+              {errors.number && errors.number.type === "required" && (
+                <span>This is required</span>
+              )}
             </div>
             <div className="form-input">
               <label htmlFor="email-text">Card Holder Name</label>
@@ -46,6 +67,9 @@ function CreditCard() {
                 type="text"
                 placeholder="Card Holder Name"
               />
+              {errors.name && errors.name.type === "required" && (
+                <span>This is required</span>
+              )}
             </div>
             <div className="card-exp-cvv">
               <div className="form-input">
@@ -54,10 +78,13 @@ function CreditCard() {
                   name="expiry"
                   component="input"
                   type="text"
-                  pattern="\d\d/\d\d"
+                  pattern="\d\d/\d\d\d\d"
                   placeholder="Valid Thru"
                   format={formatExpirationDate}
                 />
+                {errors.expiry && errors.expiry.type === "required" && (
+                  <span>This is required</span>
+                )}
               </div>
               <div className="form-input">
                 <label htmlFor="email-text">CVV</label>
@@ -69,11 +96,18 @@ function CreditCard() {
                   placeholder="CVV"
                   format={formatCVV}
                 />
+                {errors.cvv && errors.cvv.type === "required" && (
+                  <span>This is required</span>
+                )}
               </div>
             </div>
             <div className="buttons">
-              <Button type="submit" variant="contained" >Submit</Button>
-              <Button variant="outlined"  onClick={form.reset}>Reset</Button>
+              <Button type="submit" variant="contained">
+                Submit
+              </Button>
+              <Button variant="outlined" onClick={form.reset}>
+                Reset
+              </Button>
             </div>
           </form>
         );

@@ -15,7 +15,8 @@ function Purchase() {
     id: 0,
     amount: 0,
     quantity: 0,
-    currency: ''
+    currency: '',
+    paymentMode: ''
   });
   const [showOrderDetails, setShowOrderDetails] = React.useState(false);
 
@@ -28,13 +29,27 @@ function Purchase() {
     try {
       setIsErrorOccured(false);
       const orderedData = await PurchaseService.orderBook(orderDetails);
-      setShowOrderDetails(true);
       setOrderDetails({
           id: orderedData.id,
           amount: orderedData.amount,
           quantity: orderedData.quantity,
-          currency: orderedData.book?.price?.currency || 'INR'
+          currency: orderedData.book?.price?.currency || 'INR',
+          paymentMode: orderedData.paymentMode
       });
+      if (orderedData.paymentMode === 'CARD') {
+        sessionStorage.setItem('orderedData', JSON.stringify(
+          {
+            id: orderedData.id,
+            bookName: orderedData.book.name,
+            amount: orderedData.amount,
+            quantity: orderedData.quantity,
+            currency: orderedData.book?.price?.currency || 'INR',
+            paymentMode: orderedData.paymentMode
+        }
+        ));
+        navigate(`/pay/orders/${orderedData.id}`);
+      }
+      setShowOrderDetails(true);
     } catch (error) {
       setIsErrorOccured(true);
     }
@@ -50,7 +65,7 @@ function Purchase() {
       )}
       {isErrorOccured && (
         <div className="error-occurred">
-          Error Occurred Please try again later
+          Out Of Stock. Please try again later
         </div>
       )}
 

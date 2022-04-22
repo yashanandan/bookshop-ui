@@ -24,6 +24,11 @@
 }
 
 
+.form-input span {
+    color: red;
+    font-size: 14px;
+}
+
 .error-occurred {
     margin: 10px;
     font-size: 1.2rem;
