@@ -14,7 +14,7 @@
 .form-item input[type='text'],
 .form-item input[type='number'] {
     height: 40px;
-    width: 35em;
+    width: 100%;
 }
 
 .form-item span {
@@ -25,4 +25,16 @@
 
 form .MuiButton-contained {
     margin: 20px 0;
+}
+
+.stocks-available {
+    color: rgb(23, 78, 208) !important;
+}
+
+.mobile-number-input input[type=number]::-webkit-inner-spin-button, 
+.mobile-number-input input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
 }

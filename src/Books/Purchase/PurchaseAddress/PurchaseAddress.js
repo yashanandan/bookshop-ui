@@ -21,6 +21,7 @@ function PurchaseAddress(props) {
         pinCode: data.pincode,
         country: data.country,
       },
+      mobileNumber: data.mobileNumber,
       bookId: props.bookId,
       quantity: data.quantity,
       paymentMode: data.paymentMode
@@ -43,6 +44,22 @@ function PurchaseAddress(props) {
             <span>This is required</span>
           )}
         </div>
+
+        <div className="form-item mobile-number-input">
+          <label htmlFor="mobileNumber">Mobile Number:*</label>
+          <input
+            {...address("mobileNumber", { required: true, minLength: 10, maxLength: 10 })}
+            placeholder="9876543210"
+            type="number"
+          />
+          {errors.mobileNumber && errors.mobileNumber.type === "required" && (
+            <span>This is required</span>
+          )}
+           {errors.mobileNumber && (errors.mobileNumber.type === "minLength" || errors.mobileNumber.type === "maxLength") && (
+            <span>Should be 10 digits</span>
+          )}
+        </div>
+
         <div className="form-item">
           <label htmlFor="lineNoOne">Address Line 1:*</label>
           <input
@@ -75,7 +92,7 @@ function PurchaseAddress(props) {
         </div>
 
         <div className="form-item">
-          <label htmlFor="city">State:*</label>
+          <label htmlFor="state">State:*</label>
           <input
             {...address("state", { required: true })}
             placeholder="State"
@@ -87,7 +104,7 @@ function PurchaseAddress(props) {
         </div>
 
         <div className="form-item">
-          <label htmlFor="city">Pincode:*</label>
+          <label htmlFor="Pincode">Pincode:*</label>
           <input
             {...address("pincode", { required: true })}
             placeholder="Pincode"
@@ -99,7 +116,7 @@ function PurchaseAddress(props) {
         </div>
 
         <div className="form-item">
-          <label htmlFor="city">Country:*</label>
+          <label htmlFor="country">Country:*</label>
           <input
             {...address("country", { required: true })}
             placeholder="Country"
@@ -111,12 +128,14 @@ function PurchaseAddress(props) {
         </div>
 
         <div className="form-item">
-          <label htmlFor="city">Quatity:*</label>
+          <label htmlFor="quantity">Quatity:* <span className="stocks-available"> (Available - {props.bookCount}) </span></label>
           <input
-            {...address("quantity", { required: true, min: 1 })}
+            {...address("quantity", { required: true, min: 1, max: props.bookCount })}
             type="number"
             placeholder="Quantity"
+            pattern="[\d]"
             min={1}
+            max={props.bookCount}
           />
           {errors.quantity && errors.quantity.type === "required" && (
             <span>This is required</span>
@@ -126,7 +145,7 @@ function PurchaseAddress(props) {
           )}
         </div>
         <div className="form-item">
-          <label htmlFor="city">Payment Type:*</label>
+          <label htmlFor="PaymentMode">Payment Type:*</label>
           <div>
             <input type="radio" value="COD" name="paymentMode"  {...address("paymentMode", { required: true })} /> COD
             <input type="radio" value="CARD" name="paymentMode" {...address("paymentMode", { required: true })} /> Card

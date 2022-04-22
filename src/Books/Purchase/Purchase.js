@@ -22,10 +22,13 @@ function Purchase() {
     paymentMode: ''
   });
   const [showOrderDetails, setShowOrderDetails] = React.useState(false);
+  const [bookCount, setBookCount] = React.useState(0);
 
   useEffect(() => {
     const bookName = sessionStorage.getItem("bookName");
+    const bookCount = sessionStorage.getItem("bookCount");
     setBookName(bookName);
+    setBookCount(bookCount);
   }, []);
 
   const orderBook = async (orderDetails) => {
@@ -95,7 +98,7 @@ function Purchase() {
 
       {!showOrderDetails && (
         <div className="purchase-address-container">
-          <PurchaseAddress bookId={id} address={orderBook} />
+          <PurchaseAddress bookId={id} address={orderBook} bookCount={bookCount} />
         </div>
       )}
     </div>
