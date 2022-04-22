@@ -51,7 +51,7 @@ function CreditCard(props) {
                 name="number"
                 component="input"
                 type="text"
-                pattern="[\d|-]{16,22}"
+                pattern="[\d|-]{16, 17}"
                 placeholder="Card Number"
                 format={formatCreditCardNumber}
               />
