@@ -130,7 +130,6 @@ EnhancedTableHead.propTypes = {
 };
 
 export default function BooksTable(props) {
-  console.log('props ', props);
   const [order, setOrder] = React.useState("asc");
   const [isErrorOccured, setIsErrorOccured] = React.useState(false);
   const [orderBy, setOrderBy] = React.useState("amount");

@@ -17,22 +17,22 @@ describe('Credit Card test', function () {
         ({ getByText, getByPlaceholderText } = render(<CreditCard/>));
     })
     it('should show credit card input', function () {
-        expect(getByText('Card Number')).toBeInTheDocument();
+        expect(getByText('Card Number*')).toBeInTheDocument();
         expect(getByPlaceholderText('Card Number')).toBeInTheDocument();
     });
 
     it('should show expiry input', function () {
-        expect(getByText('Valid Thru')).toBeInTheDocument();
+        expect(getByText('Valid Thru*')).toBeInTheDocument();
         expect(getByPlaceholderText('Valid Thru')).toBeInTheDocument();
     });
 
     it('should show cvv input', function () {
-        expect(getByText('CVV')).toBeInTheDocument();
+        expect(getByText('CVV*')).toBeInTheDocument();
         expect(getByPlaceholderText('CVV')).toBeInTheDocument();
     });
 
     it('should show card holder input', function () {
-        expect(getByText('Card Holder Name')).toBeInTheDocument();
+        expect(getByText('Card Holder Name*')).toBeInTheDocument();
         expect(getByPlaceholderText('Card Holder Name')).toBeInTheDocument();
     });
 
