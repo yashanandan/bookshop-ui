@@ -45,8 +45,8 @@ describe('Credit Card test', function () {
     })
 
     it ('should validate cvv', function() {
-        expect(formatCVV('1234')).toBe('1234');
-        expect(formatCVV('12345')).toBe('1234');
+        expect(formatCVV('123')).toBe('123');
+        expect(formatCVV('12345')).toBe('123');
         expect(formatCVV('abcd')).toBe('');
     })
 
